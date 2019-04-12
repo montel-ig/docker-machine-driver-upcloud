@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/docker/machine/libmachine/drivers/plugin"
-	"github.com/torras/docker-machine-driver-upcloud/driver"
+    "github.com/docker/machine/libmachine/drivers/plugin"
+    "github.com/montel-ig/docker-machine-driver-upcloud/driver"
 )
 
 func main() {
