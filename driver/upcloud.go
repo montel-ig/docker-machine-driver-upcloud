@@ -25,6 +25,7 @@ type Driver struct {
 	Template              string
 	Plan                  string
 	Zone                  string
+	Storage               int
 	UsePrivateNetwork     bool
 	UsePrivateNetworkOnly bool
 	ServerUUID            string
@@ -37,6 +38,7 @@ const (
 	defaultTemplate = "01000000-0000-4000-8000-000030080200"
 	defaultZone     = "de-fra1"
 	defaultPlan     = "1xCPU-1GB"
+	defaultStorage  = 25
 )
 
 // GetCreateFlags registers the flags this driver adds to
@@ -92,6 +94,11 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Name:   "upcloud-userdata",
 			Usage:  "path to file with cloud-init user-data",
 		},
+		mcnflag.IntFlag{
+			EnvVar: "UPCLOUD_STORAGE",
+			Name:   "upcloud-storage",
+			Usage:  "specify the storage available for the server",
+		},
 	}
 }
 
@@ -100,6 +107,7 @@ func NewDriver(hostName, storePath string) *Driver {
 		Template: defaultTemplate,
 		Plan:     defaultPlan,
 		Zone:     defaultZone,
+		Storage:  defaultStorage,
 		BaseDriver: &drivers.BaseDriver{
 			SSHUser:     defaultSSHUser,
 			MachineName: hostName,
@@ -203,8 +211,8 @@ func (d *Driver) Create() error {
 		{
 			Action:  upcloud.CreateServerStorageDeviceActionClone,
 			Storage: d.Template,
-			Title:   "disk1",
-			Size:    30,
+			Title:   "docker-machine.disk1",
+			Size:    d.Storage,
 			Tier:    upcloud.StorageTierMaxIOPS,
 		},
 	}
