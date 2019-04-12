@@ -34,8 +34,8 @@ type Driver struct {
 
 const (
 	defaultSSHUser  = "root"
-	defaultTemplate = "01000000-0000-4000-8000-000030030200"
-	defaultZone     = "uk-lon1"
+	defaultTemplate = "01000000-0000-4000-8000-000030080200"
+	defaultZone     = "de-fra1"
 	defaultPlan     = "1xCPU-1GB"
 )
 
@@ -213,7 +213,7 @@ func (d *Driver) Create() error {
 
 	service := d.getService()
 
-	title := "docker-machine - " + d.ServerName
+	title := "docker-machine." + d.ServerName
 
 	createRequest := &request.CreateServerRequest{
 		Hostname:       d.ServerName,
