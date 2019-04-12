@@ -3,6 +3,7 @@
 A `docker-machine` driver for [UpCloud](https://www.upcloud.com/)
 
 Updated and maintained by [Montel Intergalactic](https://www.montel.fi)
+
 Originally developed by [Hanzo Studio](https://hanzo.es/)
 
 ## How to get it
@@ -10,7 +11,7 @@ Originally developed by [Hanzo Studio](https://hanzo.es/)
 ### The binary way
 
 Download the latest
-[binary](https://github.com/montel-ig/docker-machine-driver-upcloud/releases/download/0/docker-machine-driver-upcloud) from the
+[binary](https://github.com/montel-ig/docker-machine-driver-upcloud/releases/latest/download/docker-machine-driver-upcloud) from the
 [releases](https://github.com/montel-ig/docker-machine-driver-upcloud/releases) page,
 place it somewhere in your path, like `/usr/local/bin/` and make sure the binary is executable.
 
