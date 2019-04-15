@@ -26,6 +26,8 @@ type Driver struct {
 	Plan                  string
 	Zone                  string
 	Storage               int
+	CoreNumber            int
+	MemoryAmount          int
 	UsePrivateNetwork     bool
 	UsePrivateNetworkOnly bool
 	ServerUUID            string
@@ -98,6 +100,17 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			EnvVar: "UPCLOUD_STORAGE",
 			Name:   "upcloud-storage",
 			Usage:  "specify the storage available for the server",
+			Value:	25,
+		},
+		mcnflag.IntFlag{
+			EnvVar: "UPCLOUD_CORE_NUMBER",
+			Name:   "upcloud-core-number",
+			Usage:  "specify the number of cores",
+		},
+		mcnflag.IntFlag{
+			EnvVar: "UPCLOUD_MEMORY_AMOUNT",
+			Name:   "upcloud-memory-amount",
+			Usage:  "specify the amount of RAM to be assigned",
 		},
 	}
 }
@@ -134,12 +147,21 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.UsePrivateNetwork = flags.Bool("upcloud-use-private-network")
 	d.UsePrivateNetworkOnly = flags.Bool("upcloud-use-private-network-only")
 	d.Plan = flags.String("upcloud-plan")
+	d.Storage = flags.Int("upcloud-storage")
+	d.CoreNumber = flags.Int("upcloud-core-number")
+	d.MemoryAmount = flags.Int("upcloud-memory-amount")
 	d.ServerName = d.MachineName
 	d.UserDataFile = flags.String("upcloud-userdata")
 	d.SetSwarmConfigFromFlags(flags)
 
 	if d.User == "" || d.Passwd == "" {
-		return fmt.Errorf("upcloud driver requires upcloud credentials.")
+		return fmt.Errorf("driver requires UpCloud credentials")
+	}
+
+	if d.CoreNumber > 0 && d.MemoryAmount == 0 {
+		return fmt.Errorf("please enter a valid memory amount")
+	} else if d.MemoryAmount > 0 && d.CoreNumber == 0 {
+		return fmt.Errorf("please enter a valid core number")
 	}
 
 	return nil
@@ -232,6 +254,14 @@ func (d *Driver) Create() error {
 		LoginUser:      loginUser,
 		StorageDevices: storageDevices,
 		IPAddresses:    ipAddressesAry,
+	}
+
+	// If a core number and memory amount was specified, ignore the plan (if any)
+	// and use the passed values
+	if d.CoreNumber != 0 && d.MemoryAmount != 0 {
+        createRequest.Plan = ""
+		createRequest.MemoryAmount = d.MemoryAmount
+		createRequest.CoreNumber = d.CoreNumber
 	}
 
 	newServer, err := service.CreateServer(createRequest)
