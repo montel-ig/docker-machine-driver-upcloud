@@ -1,5 +1,7 @@
 # UpCloud Docker Machine Driver
 
+[![CircleCI](https://circleci.com/gh/montel-ig/docker-machine-driver-upcloud/tree/develop.svg?style=svg)](https://circleci.com/gh/montel-ig/docker-machine-driver-upcloud/tree/develop)
+
 A `docker-machine` driver for [UpCloud](https://www.upcloud.com/)
 
 Updated and maintained by [Montel Intergalactic](https://www.montel.fi)
