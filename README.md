@@ -68,11 +68,45 @@ Example run:
 $ docker-machine create \
 --driver upcloud \
 --upcloud-user "user" \
---upcloud-passwd "password" \
---upcloud-template "an UpCloud's template ID, defaults to Ubuntu Xenial" \
+--upcloud-passwd "password"
 machine_name
 ```
+
+## Developing
+The repository includes a `Makefile` with the commands required to develop the project.
+
+To test the driver locally, run
+```bash
+$ make install
+```
+This will compile the driver and copy it to your `$GOPATH/bin` directory, so it's accessible to Docker via `$PATH`.
+
+After this, you can run it normally with `docker-machine`
+```bash
+$ docker-machine create --driver upcloud #...
+```
+
+If you want to remove the installed driver, run
+```bash
+$ make uninstall
+```
+This will remove the compiled driver from `$GOPATH/bin`.
+
+### Releasing
+A command for building different versions is also included to simplify the distribution of the driver to different platforms.
+
+To build the driver for release, run
+```bash
+$ make build-all
+```
+This will compile the driver for MacOS, Linux, and Windows, for the `368` and `amd64` architectures. If you need to compile to a different target, you can modify the `TARGET_OS` or `TARGET_ARCH` variables on the `Makefile`.
+
+To make the distribution easier, the build will also create a directory with the compressed driver for each platform. You can find those under `dist/compressed`.
 
 ### Issues, contributions and comments.
 
 Issues, contributions, and comments are always welcome. Feel free to submit an issue or pull request with your contributions.
+
+---
+
+Made with :heart: from :finland:
