@@ -97,8 +97,8 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage:  "path to file with cloud-init user-data",
 		},
 		mcnflag.IntFlag{
-			EnvVar: "UPCLOUD_STORAGE",
-			Name:   "upcloud-storage",
+			EnvVar: "UPCLOUD_STORAGE_SIZE",
+			Name:   "upcloud-storage-size",
 			Usage:  "specify the storage available for the server",
 			Value:	25,
 		},
@@ -147,7 +147,7 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.UsePrivateNetwork = flags.Bool("upcloud-use-private-network")
 	d.UsePrivateNetworkOnly = flags.Bool("upcloud-use-private-network-only")
 	d.Plan = flags.String("upcloud-plan")
-	d.Storage = flags.Int("upcloud-storage")
+	d.Storage = flags.Int("upcloud-storage-size")
 	d.CoreNumber = flags.Int("upcloud-core-number")
 	d.MemoryAmount = flags.Int("upcloud-memory-amount")
 	d.ServerName = d.MachineName
