@@ -110,7 +110,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 		mcnflag.IntFlag{
 			EnvVar: "UPCLOUD_MEMORY_AMOUNT",
 			Name:   "upcloud-memory-amount",
-			Usage:  "specify the amount of RAM to be assigned",
+			Usage:  "specify the amount (GB) of RAM to be assigned",
 		},
 	}
 }
@@ -260,7 +260,8 @@ func (d *Driver) Create() error {
 	// and use the passed values
 	if d.CoreNumber != 0 && d.MemoryAmount != 0 {
         createRequest.Plan = ""
-		createRequest.MemoryAmount = d.MemoryAmount
+		// Convert the MemoryAmount GB to MBs
+		createRequest.MemoryAmount = d.MemoryAmount * 1024
 		createRequest.CoreNumber = d.CoreNumber
 	}
 
