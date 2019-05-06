@@ -97,8 +97,8 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage:  "path to file with cloud-init user-data",
 		},
 		mcnflag.IntFlag{
-			EnvVar: "UPCLOUD_STORAGE",
-			Name:   "upcloud-storage",
+			EnvVar: "UPCLOUD_STORAGE_SIZE",
+			Name:   "upcloud-storage-size",
 			Usage:  "specify the storage available for the server",
 			Value:	25,
 		},
@@ -110,7 +110,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 		mcnflag.IntFlag{
 			EnvVar: "UPCLOUD_MEMORY_AMOUNT",
 			Name:   "upcloud-memory-amount",
-			Usage:  "specify the amount of RAM to be assigned",
+			Usage:  "specify the amount (GB) of RAM to be assigned",
 		},
 	}
 }
@@ -147,7 +147,7 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.UsePrivateNetwork = flags.Bool("upcloud-use-private-network")
 	d.UsePrivateNetworkOnly = flags.Bool("upcloud-use-private-network-only")
 	d.Plan = flags.String("upcloud-plan")
-	d.Storage = flags.Int("upcloud-storage")
+	d.Storage = flags.Int("upcloud-storage-size")
 	d.CoreNumber = flags.Int("upcloud-core-number")
 	d.MemoryAmount = flags.Int("upcloud-memory-amount")
 	d.ServerName = d.MachineName
@@ -260,7 +260,8 @@ func (d *Driver) Create() error {
 	// and use the passed values
 	if d.CoreNumber != 0 && d.MemoryAmount != 0 {
         createRequest.Plan = ""
-		createRequest.MemoryAmount = d.MemoryAmount
+		// Convert the MemoryAmount GB to MBs
+		createRequest.MemoryAmount = d.MemoryAmount * 1024
 		createRequest.CoreNumber = d.CoreNumber
 	}
 

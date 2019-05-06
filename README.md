@@ -1,5 +1,7 @@
 # UpCloud Docker Machine Driver
 
+[![CircleCI](https://circleci.com/gh/montel-ig/docker-machine-driver-upcloud/tree/develop.svg?style=svg)](https://circleci.com/gh/montel-ig/docker-machine-driver-upcloud/tree/develop)
+
 A `docker-machine` driver for [UpCloud](https://www.upcloud.com/)
 
 Updated and maintained by [Montel Intergalactic](https://www.montel.fi)
@@ -44,23 +46,23 @@ Options:
 
 ```bash
 $ docker-machine create --driver upcloud
-
-...
-
-  --upcloud-user                                             upcloud api access user [$UPCLOUD_USER]
-  --upcloud-passwd                                           upcloud api access user's password [$UPCLOUD_PASSWD]
-  --upcloud-plan "1xCPU-1GB"                                 upcloud plan [$UPCLOUD_PLAN]
-  --upcloud-ssh-user "root"                                  SSH username [$UPCLOUD_SSH_USER]
-  --upcloud-storage 25                                       specify the storage available for the server [$UPCLOUD_STORAGE]
-  --upcloud-template "01000000-0000-4000-8000-000030080200"  upcloud template [$UPCLOUD_TEMPLATE]
-  --upcloud-use-private-network                              set this flag to use private networking [$UPCLOUD_USE_PRIVATE_NETWORK]
-  --upcloud-use-private-network-only                         set this flag to only use private networking [$UPCLOUD_USE_PRIVATE_NETWORK_ONLY]
-  --upcloud-userdata                                         path to file with cloud-init user-data [$UPCLOUD_USERDATA]
-  --upcloud-zone "de-fra1"                                   upcloud zone [$UPCLOUD_ZONE]
-
-...
-
 ```
+
+| Flag | Parameters | Description |
+| ---- | ---------- | ----------- |
+| --upcloud-user | "username" | upcloud api access user [$UPCLOUD_USER] |
+| --upcloud-passwd | "password | upcloud api access password [$UPCLOUD_PASSWD] |
+| --upcloud-plan | "1xCPU-1GB" | upcloud plan [$UPCLOUD_PLAN] |
+| --upcloud-core-number | 1 | specify the number of cores [$UPCLOUD_CORE_NUMBER] |
+| --upcloud-memory-amount | 4 | specify the amount (GB) of RAM to be assigned [$UPCLOUD_MEMORY_AMOUNT] |
+| --upcloud-storage | 25 | the storage available for the server [$UPCLOUD_STORAGE] |
+| --upcloud-ssh-user | "root" | username [$UPCLOUD_SSH_USER] |
+| --upcloud-template | "01000000-0000-4000-8000-000030080200" | template [$UPCLOUD_TEMPLATE] |
+| --upcloud-use-private-network | | to use private networking [$UPCLOUD_USE_PRIVATE_NETWORK] |
+| --upcloud-use-private-network-only | | this flag to only use private networking [$UPCLOUD_USE_PRIVATE_NETWORK_ONLY] |
+| --upcloud-userdata | "~/meerkat/cloud-init.sh" | path to file with cloud-init user-data [$UPCLOUD_USERDATA] |
+| --upcloud-zone | "de-fra1" | zone [$UPCLOUD_ZONE] |
+
 
 Example run:
 
